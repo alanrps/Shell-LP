@@ -10,25 +10,37 @@ void main(){
     import std.format;
 
     string parametros;
-    write(">");
-    parametros = readln();
-    // write(parametros);
-    auto aux = parametros.split;
 
-    auto dir = deleteme ~ "dir"; 
-    auto f = deleteme ~ "f";
+    while(1){
+        write(">");
+        parametros = readln();
+        // write(parametros);
+        auto aux = parametros.split;
 
-    if(cmp(aux[0],"mkdir") == 0){
-        aux[1].mkdir;
-    }
-    else if(cmp(aux[0],"rmdir") == 0){
-        aux[1].rmdir;
-    }
-    else if(cmp(aux[0],"mkfile") == 0){
-        append(aux[1],aux[2]); //Nome do arquivo,dados do arquivo
-    } 
-    else if(cmp(aux[0],"rmfile") == 0){
-        remove(aux[1]);
+        auto dir = deleteme ~ "dir"; 
+        auto f = deleteme ~ "f";
+
+        if(cmp(aux[0],"mkdir") == 0){
+            aux[1].mkdir;
+        }
+        else if(cmp(aux[0],"rmdir") == 0){
+            aux[1].rmdir;
+        }
+        else if(cmp(aux[0],"mkfile") == 0){
+            append(aux[1],aux[2]); //Nome do arquivo,dados do arquivo
+        } 
+        else if(cmp(aux[0],"rmfile") == 0){
+            remove(aux[1]);
+        }
+        else if(cmp(aux[0],"copy") == 0){
+            copy(aux[1],aux[2]);
+        }
+        else if(cmp(aux[0],"exit") == 0){
+            return;
+        }
+        else{
+            write("Comando não encontrado\n");
+        }
     }
 }  
 
