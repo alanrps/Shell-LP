@@ -18,7 +18,9 @@ void main(){
         auto aux = parametros.split;
 
         auto dir = deleteme ~ "dir"; 
+        write(dir);
         auto f = deleteme ~ "f";
+        auto target = deleteme ~ "target";
 
         if(cmp(aux[0],"mkdir") == 0){
             aux[1].mkdir;
@@ -35,6 +37,15 @@ void main(){
         else if(cmp(aux[0],"copy") == 0){
             copy(aux[1],aux[2]);
         }
+        else if(cmp(aux[0],"cat") == 0){
+           write(readText(aux[1]),"\n"); 
+        }
+        else if(cmp(aux[0],"clear") == 0){
+            write("\033[H\033[2J");
+        }
+        // else if(cmp(aux[0],"move"){
+            
+        // }
         else if(cmp(aux[0],"exit") == 0){
             return;
         }
