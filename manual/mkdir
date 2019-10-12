@@ -1,0 +1,9 @@
+mkdir caminho
+
+Descrição:
+-Criar diretórios
+-Caso já exista, será necessário fazer a confirmação
+-É possível criar vários diretórios em apenas um comando
+
+Argumentos:
+-caminho: Caminho que onde o diretório será criado

@@ -1,0 +1,10 @@
+mkfile caminho dados
+
+Descrição:
+-Criar arquivos
+-Caso já exista será necessário fazer a confirmação
+-É possível criar vários arquivos em apenas um comando
+
+Argumentos:
+-caminho: Diretório onde o arquivo será criado
+-dados: Dados que o arquivo irá conter
