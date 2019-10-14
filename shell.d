@@ -84,27 +84,31 @@ void cpy(string[] aux,float quantidade){
     // string caminho_arquivo = join([aux[2],aux[1]]);
     // write(caminho_arquivo);
 
-    //copiar arquivos
-    if(aux[1].isFile == true){
-        if(aux[2].exists == true){
-            write("Arquivo ja existe,deseja substituir?(s ou n)\n");            
-            string decisao = readln();
-            
-            if(equal(decisao,"s\x0a") == true || equal(decisao,"S\x0a") == true){
-                write("substituiu");
-                remove(aux[2]);
-                copy(aux[1],aux[2]); //nome arquivo, destino 
+    for(int i = 1; i < quantidade - 1;i++){
+        //copiar arquivos
+        if(aux[i].isFile == true){
+            if(aux[i+1].exists == true){
+                write("Arquivo ja existe,deseja substituir?(s ou n)\n");            
+                string decisao = readln();
+                
+                if(equal(decisao,"s\x0a") == true || equal(decisao,"S\x0a") == true){
+                    write("substituiu");
+                    remove(aux[i+1]);
+                    copy(aux[i],aux[i+1]); //nome arquivo, destino 
+                }
+                else if(decisao == "n\x0a")
+                    write("Arquivo foi mantido");
+            }else{
+                append(aux[i+1],null);
+                copy(aux[i],aux[i+1]);
             }
-            else if(decisao == "n\x0a")
-                write("Arquivo foi mantido");
-        }else{
-            append(aux[2],null);
-            copy(aux[1],aux[2]);
+        }
+        //copia diretórios = encontrar função
+        else if(aux[i].isDir == true){
+
         }
     }
-    else if(aux[1].isDir == true){
-
-    }
+        
                     
 }
 
