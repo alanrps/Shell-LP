@@ -1,5 +1,5 @@
-import std.algorithm.comparison:  equal;
-import std.stdio: write, writeln, writef, writefln , fscanf, readln;
+import std.algorithm.comparison;
+import std.stdio: write, writeln, writef, writefln , fscanf, readln,readf;
 import std.exception : assertThrown;
 import std.array; 
 import std.string;
@@ -19,26 +19,24 @@ void man(string[] aux,float quantidade){
 
 void mkdir(string[] aux,float quantidade){
     import std.file: mkdir,rmdir;
-    import std.algorithm.comparison: equal;
-    import std.string;
     for(int i = 1;i < quantidade;i++){
         if(aux[i].exists == true){
             write("Diretorio ja existe,deseja substituir?(s ou n)\n");
             string decisao = readln();
             
-            if(equal("s",decisao) == true){
+            if(equal(decisao,"s\x0a") == true || equal(decisao,"S\x0a") == true){
                 write("substituição funciona");
-                aux[i].rmdir;
-                aux[i].mkdir;
-            }else if((equal("n",decisao) == true)){
+                aux[i].rmdirRecurse;
+                aux[i].mkdirRecurse;
+            }else if((equal(decisao,"n\x0a") == true || equal(decisao,"N\x0a") == true)){
                 write("Diretorio foi mantido\n");
             }
-            // else{
-            //     write("Comando inválido\n");
-            // }
+            else{
+                write("Comando inválido\n");
+            }
         }else{
              write("criar");
-             aux[i].mkdir; 
+             aux[i].mkdirRecurse; 
         }
     } 
 }
@@ -55,11 +53,11 @@ void mkfile(string[] aux,float quantidade){
                     write("Arquivo ja existe,deseja substituir?(s ou n)\n");
                     string decisao = readln();
 
-                    if(equal(decisao,"s") == true || equal(decisao,"S") == true){
+                    if(equal(decisao,"s\x0a") == true || equal(decisao,"S\x0a") == true){
                         remove(aux[i]);
                         append(aux[i],aux[i+1]); //Caminho, dados do arquivo
                     }
-                    else if(equal(decisao,"n") == true || equal(decisao,"N") == true){
+                    else if(equal(decisao,"n\x0a") == true || equal(decisao,"N\x0a") == true){
                         append(aux[i],aux[i+1]); //Caminho, dados do arquivo
                     }else{
                         write("Comando inválido\n");
@@ -80,6 +78,36 @@ void cat(string[] aux){
     write(readText(aux[1]),"\n"); 
 }
 
+void cpy(string[] aux,float quantidade){
+    // string caminho = getcwd();
+    // aux[2].chdir;
+    // string caminho_arquivo = join([aux[2],aux[1]]);
+    // write(caminho_arquivo);
+
+    //copiar arquivos
+    if(aux[1].isFile == true){
+        if(aux[2].exists == true){
+            write("Arquivo ja existe,deseja substituir?(s ou n)\n");            
+            string decisao = readln();
+            
+            if(equal(decisao,"s\x0a") == true || equal(decisao,"S\x0a") == true){
+                write("substituiu");
+                remove(aux[2]);
+                copy(aux[1],aux[2]); //nome arquivo, destino 
+            }
+            else if(decisao == "n\x0a")
+                write("Arquivo foi mantido");
+        }else{
+            append(aux[2],null);
+            copy(aux[1],aux[2]);
+        }
+    }
+    else if(aux[1].isDir == true){
+
+    }
+                    
+}
+
 void main(){
     string parametros;
  
@@ -98,16 +126,9 @@ void main(){
     while(1){
         write(">");
         parametros = readln();
-        // write(parametros);
-        // int quantidade = quantidade_argumentos(parametros);
         string[] aux = parametros.split;
         float quantidade = count(aux);
     
-    
-        auto dir = deleteme ~ "dir"; 
-        auto f = deleteme ~ "f";
-        auto target = deleteme ~ "target";
-
         if(equal(aux[0],"mkdir") == true){
             mkdir(aux,quantidade);
         }
@@ -121,8 +142,7 @@ void main(){
             rmfile(aux,quantidade);
         }
         else if(equal(aux[0],"copy") == true){
-            write(aux[1],aux[2]);
-            copy(aux[1],aux[2]);
+            cpy(aux,quantidade);
         }
         else if(equal(aux[0],"cat") == true){
            cat(aux);
